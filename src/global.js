@@ -11,6 +11,8 @@ export default createGlobalStyle`
         background: #333333;
         font-family: 'Cairo', sans-serif;
         overflow-x: hidden;
+        height: 100%;
+
 
     }
 

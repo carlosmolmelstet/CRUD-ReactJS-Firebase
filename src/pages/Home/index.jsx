@@ -25,9 +25,8 @@ function Home() {
       }))
     })
   },[])
-  
-  
 
+  
 
   
 
@@ -39,8 +38,28 @@ function Home() {
   //   })
   // },[])
 
+  function aparecermodal() {
+    document.getElementById("modal-exclude").style.display = "flex";
+    
+  }
+
+  function fecharrmodal() {
+    document.getElementById("modal-exclude").style.display = "none";
+  }
+
+  function ttt() {
+    window.confirm('quer mms?')
+  }
+
+  
+
   return (
       <Container>
+              <div id="modal-exclude">
+                <h1>deu bomm</h1>
+                <button onClick={ttt} >sim</button>
+                <button onClick={fecharrmodal} >nao</button>
+              </div>
           <Navbar />
           <Wrapper>
               <Titulo>
@@ -53,6 +72,9 @@ function Home() {
                   </button>
                 </Link>
               </Titulo>
+
+             
+
 
               <div className="row">
 
@@ -84,14 +106,18 @@ function Home() {
                                  <Link to={`/edit${val.id}`}>
                                   <img className="edit" src={edit} alt=""/>
                                  </Link>
-                                 <img onClick={() => db.collection("produtos").doc(`${val.id}`).delete().then(function() {
-                                console.log("excluir");
-                              }).catch(function(error) {
-                                  console.error("Error removing document: ", error);
-                              })} 
-                                 
-                                 
+                                 <img onClick={() => {
+
+                                   if (window.confirm(`Tem certeza que quer excluir ${val.info.name} ?`)) {
+                                    db.collection("produtos").doc(`${val.id}`).delete().then(function() {
+                                     }).catch(function(error) {
+                                       console.error("Error removing document: ", error);
+                                     })
+                                  }
+                                }
+                              }                                                           
                                  src={exclude} alt=""/>
+
                                </div>
                             </div>
                           </div>

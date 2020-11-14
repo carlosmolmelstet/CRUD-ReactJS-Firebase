@@ -4,6 +4,12 @@ export const Container = styled.div`
   width: 100%;
   margin-top: 30px;
 
+  :focus-within {
+   h5 {
+     color: #48cae4;
+   }
+}
+
   h5{
     margin-left: 5px;
     color: #7D7D7D;
@@ -31,7 +37,7 @@ export const Container = styled.div`
     input:focus  {     
       border: 3px solid #48cae4;
       padding: 22px;
-
-
+      
   }
+    
 `;

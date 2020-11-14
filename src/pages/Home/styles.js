@@ -1,6 +1,20 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+
+    #modal-exclude {
+        display: none;
+        justify-content: center;
+        align-items: center;
+
+        width: 100vw;
+        height: 100vh;
+
+        background: rgba(0, 0, 0, 0.8);
+        position: absolute;
+
+        z-index: 2;
+    }
     
 `;
 
@@ -12,6 +26,8 @@ export const Wrapper = styled.div`
     transform: translateX(-50%);
 
     padding: 15px;  
+
+
 
     @media(max-width: 1400px) {
         width: 100vw;

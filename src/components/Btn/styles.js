@@ -25,6 +25,16 @@ export const Button = styled.button`
         cursor: pointer;
         background-color: #00b4d8;
     }
+
+    @media(max-width: 400px) {
+           margin-right: 50%;
+           transform: translateX(50%)
+        
+
+       
+
+        
+    }
 `;
 
 

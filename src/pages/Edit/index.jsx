@@ -3,7 +3,8 @@ import {Link, useParams} from 'react-router-dom';
 
 import { 
   Container,
-  Wrapper, } from './styles';
+  Wrapper,
+  Modal } from './styles';
 
 // import {db} from "../../firebase";
 
@@ -19,38 +20,59 @@ import {db} from "../../firebase";
 function Edit() {
 
   const params = useParams();
-  db.collection("produtos").doc(`${params.id}`).get().then(function teste(doc) {
+
+  db.collection("produtos").doc(`${params.id}`).get(function teste(doc) {
     
     var data = doc.data();
 
     window.$info =  data;
     
     
-  }).catch(function(error) {
-    console.log("Error getting document:", error);
   });
 
+  // ===> FUNÇÃO PARA ALTERAR UM PRODUTO <===
   function handleCreate() {
-    
     var produtosRef = db.collection("produtos").doc(`${params.id}`);
-
-      return produtosRef.update({
-        name: values.name,
-        description: values.description,
-        price: values.price,
-        amont: values.amont,
-        image: values.image,
-      },)
       
+    // VALIDAR SE OS CAMPOS NÃO ESTAO VAZIOS
+      if (values.name == "") {
+        document.getElementById("modal-name").style.display = "flex";
+      }
+      if (values.description == "") {
+        document.getElementById("modal-description").style.display = "flex";
+
+      }
+      if (values.price == "") {
+        document.getElementById("modal-price").style.display = "flex";
+
+      }
+      if (values.amont == "") {
+        // document.getElementById("modal-amont").style.display = "flex";
+      }
+      if (values.image == "") {
+        document.getElementById("modal-image").style.display = "flex";
+      }
+
+      // FAZ A ATUALIZAÇÃO DAS INFOS DO PRODUTO
+      else {
+        // alert("atualizar?")
+          return produtosRef.update({
+            name: values.name,
+            description: values.description,
+            price: values.price,
+            amont: values.amont,
+            image: values.image,
+          },)
+      }
   }
   
   
     var initialValue = {
-      name: window.$info.name,
-      description: window.$info.description,
-      price: window.$info.price,
-      amont: window.$info.amont,
-      image:  window.$info.image
+      name: "",
+      description: "",
+      price: "",
+      amont: "",
+      image: ""
     }
     
     
@@ -63,45 +85,100 @@ function Edit() {
       ...values,
       [name]: value,
 
-    })
+    });
+    
   }
+
+  function closeName() {
+    document.getElementById("modal-name").style.display = "none";
+  }
+
+  function closeDescription() {
+    document.getElementById("modal-description").style.display = "none";
+  }
+
+  function closePrice() {
+    document.getElementById("modal-price").style.display = "none";
+  }
+
+  function closeAmont() {
+    document.getElementById("modal-amont").style.display = "none";
+  }
+
+  function closeImage() {
+    document.getElementById("modal-image").style.display = "none";
+  }
+
 
   return (
       <Container>
+
+          
+          <Modal id="modal-name">
+            <div className="wrapper">
+              <h1>Seu produto precisa de um nome</h1>
+              <button onClick={closeName} >FECHAR</button>
+            </div>
+          </Modal>
+          <Modal id="modal-description">
+            <div className="wrapper">
+              <h1>Seu produto precisa de uma descrição</h1>
+              <button onClick={closeDescription} >FECHAR</button>
+            </div>
+          </Modal>
+          <Modal id="modal-price">
+            <div className="wrapper">
+              <h1>Seu produto precisa de um preço</h1>
+              <button onClick={closePrice} >FECHAR</button>
+            </div>
+          </Modal>
+          <Modal id="modal-amont">
+            <div className="wrapper">
+              <h1>Seu produto precisa de uma quantidade</h1>
+              <button onClick={closeAmont} >FECHAR</button>
+            </div>
+          </Modal>
+          <Modal id="modal-image">
+            <div className="wrapper">
+              <h1>Seu produto precisa de uma imagem</h1>
+              <button onClick={closeImage} >FECHAR</button>
+            </div>
+          </Modal>
+         
+        
           <Navbar />
           <Wrapper>
              <h2>EDITAR PRODUTO</h2>
-
-                    <form>
+                  <form>
                     <div className="row">
                       <div className="col-12 col-sm-4">
-                        <Input required id="name" onChange={handleInputChange} name="name" value={values.name} label="nome" />
+                        <Input type="text"  id="name" onChange={handleInputChange} name="name" value={values.name} placeholder="NOME" label="nome" />
                       </div>
                       <div className="col-12 col-sm-4">
-                        <Input required id="price" onChange={handleInputChange} name="price" value={values.price}  label="preço" />
+                        <Input type="number"  id="price" onChange={handleInputChange} name="price" value={values.price} placeholder="PREÇO" label="preço " />
                       </div>
                       <div className="col-12 col-sm-4">
-                        <Input required id="amont" onChange={handleInputChange} name="amont" value={values.amont} placeholder="Quantidade" label="qtd" />
+                        <Input type="number" required id="amont" onChange={handleInputChange} name="amont" value={values.amont} placeholder="QUANTIDADE" label="qtd" />
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-12 col-sm-12">
-                       <Textarea id="description" onChange={handleInputChange} name="description" value={values.description} placeholder="Descrição" label="descrição" />
+                       <Textarea id="description" onChange={handleInputChange} name="description" value={values.description} placeholder="DESCRIÇÂO" label="descrição" />
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-12 col-sm-12">
-                        <Input id="image" onChange={handleInputChange} name="image" value={values.image} placeholder="Link da Imagem" label="Imagem" />
+                        <Input type="text" id="image" onChange={handleInputChange} name="image" value={values.image} placeholder="LINK DA IMAGEM" label="Imagem" />
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-12 col-sm-12">
+                      <div className="col-12 col-sm-12 ">
                         <Link to={`/edit${params.id}`}>
-                          <Btn onClick={handleCreate} label="EDITAR" />
+                          <Btn className="btn-edit"  onClick={handleCreate} label="EDITAR" />
 
                         </Link>
                         <Link to={`/`}>
-                          <button>VOLTAR</button>
+                          <button className="btn-back">VOLTAR</button>
 
 
                         </Link>
