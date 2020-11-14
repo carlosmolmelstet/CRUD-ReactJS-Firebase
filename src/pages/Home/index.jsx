@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
-
 import {db} from "../../firebase";
 import {Link} from 'react-router-dom';
 
-import Navbar from '../../components/Navbar';
-import exclude from '../../images/delete.svg';
-import edit from '../../images/edit.svg';
 import { 
   Container,
   Wrapper,
   Titulo,
-  List,
   Product
  } from './styles';
+
+import Navbar from '../../components/Navbar';
+import exclude from '../../images/delete.svg';
+import edit from '../../images/edit.svg';
 
 function Home() {
   const [produtos, setProdutos] = useState([]);
 
+
+  // PEGAR INFO DOS DOCS 
   useEffect(()=>{
     db.collection('produtos/').onSnapshot(snapshot=>{
       setProdutos(snapshot.docs.map(function(doc){
@@ -25,41 +26,10 @@ function Home() {
       }))
     })
   },[])
-
-  
-
-  
-
-  // useEffect(()=>{
-  //   db.collection('produtos/').onSnapshot(snapshot=>{
-  //     setID(snapshot.docs.map(function(doc){
-  //       return {id:doc.id};
-  //     }))
-  //   })
-  // },[])
-
-  function aparecermodal() {
-    document.getElementById("modal-exclude").style.display = "flex";
-    
-  }
-
-  function fecharrmodal() {
-    document.getElementById("modal-exclude").style.display = "none";
-  }
-
-  function ttt() {
-    window.confirm('quer mms?')
-  }
-
   
 
   return (
       <Container>
-              <div id="modal-exclude">
-                <h1>deu bomm</h1>
-                <button onClick={ttt} >sim</button>
-                <button onClick={fecharrmodal} >nao</button>
-              </div>
           <Navbar />
           <Wrapper>
               <Titulo>
@@ -72,12 +42,7 @@ function Home() {
                   </button>
                 </Link>
               </Titulo>
-
-             
-
-
               <div className="row">
-
                {
                  produtos.map(function(val){
                     return (
@@ -107,32 +72,24 @@ function Home() {
                                   <img className="edit" src={edit} alt=""/>
                                  </Link>
                                  <img onClick={() => {
-
                                    if (window.confirm(`Tem certeza que quer excluir ${val.info.name} ?`)) {
                                     db.collection("produtos").doc(`${val.id}`).delete().then(function() {
                                      }).catch(function(error) {
                                        console.error("Error removing document: ", error);
                                      })
+                                   }
                                   }
-                                }
-                              }                                                           
+                                }                                                           
                                  src={exclude} alt=""/>
-
                                </div>
                             </div>
                           </div>
                         </Product>
-                        
-                      </div>
-                        
+                      </div> 
                     )
                   })
                 }
-               
               </div>
-
-
-
           </Wrapper>
       </Container>
   );

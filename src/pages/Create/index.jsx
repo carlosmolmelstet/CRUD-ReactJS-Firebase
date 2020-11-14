@@ -1,21 +1,23 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
+import {db} from "../../firebase";
+import { Link } from 'react-router-dom';
 
 import { 
   Container,
-  Wrapper, } from './styles';
-
-import {db} from "../../firebase";
+  Wrapper, 
+} from './styles';
 
 
 import Navbar from '../../components/Navbar';
 import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
 import Btn from '../../components/Btn';
-import { Link } from 'react-router-dom';
 
 
 function Create() {
 
+
+  // DEFINE O VALOR INICIAL DE UM PRODUTO
   const initialValue = {
     name: '',
     description: '',
@@ -24,19 +26,18 @@ function Create() {
     image: ''
   }
   
-
   const [values, setValues] = useState(initialValue)
 
+  // FUNÇÃO PARA CAPTURAR O VALOR DE UM INPUT
   const handleInputChange = e =>{
     var { name, value } = e.target
     setValues({
       ...values,
       [name]: value,
-
     })
   }
 
-
+  // FUNÇÃO PARA CRIAR UM PRODUTO
   function handleCreate() {
 
     db.collection("produtos").add({
@@ -47,10 +48,6 @@ function Create() {
       image: values.image
   })
   }
-
-
-
-  
 
 
   return (

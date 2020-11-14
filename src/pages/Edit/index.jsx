@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
+import {db} from "../../firebase";
 
 import { 
   Container,
   Wrapper,
-  Modal } from './styles';
-
-// import {db} from "../../firebase";
+  Modal 
+} from './styles';
 
 
 import Navbar from '../../components/Navbar';
@@ -14,26 +14,20 @@ import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
 import Btn from '../../components/Btn';
 
-import {db} from "../../firebase";
 
 
 function Edit() {
-
   const params = useParams();
 
+  // ===> PEGA AS INFOS DO PRODUTO PELO PARAMETRO (ID) DA ROTA <===
   db.collection("produtos").doc(`${params.id}`).get(function teste(doc) {
-    
     var data = doc.data();
-
     window.$info =  data;
-    
-    
   });
 
   // ===> FUNÇÃO PARA ALTERAR UM PRODUTO <===
-  function handleCreate() {
+  function handleEdit() {
     var produtosRef = db.collection("produtos").doc(`${params.id}`);
-      
     // VALIDAR SE OS CAMPOS NÃO ESTAO VAZIOS
       if (values.name == "") {
         document.getElementById("modal-name").style.display = "flex";
@@ -46,9 +40,9 @@ function Edit() {
         document.getElementById("modal-price").style.display = "flex";
 
       }
-      if (values.amont == "") {
-        // document.getElementById("modal-amont").style.display = "flex";
-      }
+      // if (values.amont == "") {
+      //   document.getElementById("modal-amont").style.display = "flex";
+      // }
       if (values.image == "") {
         document.getElementById("modal-image").style.display = "flex";
       }
@@ -66,29 +60,28 @@ function Edit() {
       }
   }
   
-  
-    var initialValue = {
-      name: "",
-      description: "",
-      price: "",
-      amont: "",
-      image: ""
-    }
+  // DEFINE O VALOR INICIAL COMO VAZIO
+  var initialValue = {
+    name: "",
+    description: "",
+    price: "",
+    amont: "",
+    image: ""
+  }  
     
-    
-    const [values, setValues] = useState(initialValue)
-    
+  const [values, setValues] = useState(initialValue)
 
+  // CAPTURA O VALOR DO INPUT
   const handleInputChange = e =>{
     var { name, value } = e.target
     setValues({
       ...values,
       [name]: value,
-
     });
     
   }
 
+  // FUNÇÃO PARA FECHAR OS MODAIS
   function closeName() {
     document.getElementById("modal-name").style.display = "none";
   }
@@ -112,8 +105,7 @@ function Edit() {
 
   return (
       <Container>
-
-          
+        
           <Modal id="modal-name">
             <div className="wrapper">
               <h1>Seu produto precisa de um nome</h1>
@@ -143,8 +135,7 @@ function Edit() {
               <h1>Seu produto precisa de uma imagem</h1>
               <button onClick={closeImage} >FECHAR</button>
             </div>
-          </Modal>
-         
+          </Modal>   
         
           <Navbar />
           <Wrapper>
@@ -174,18 +165,14 @@ function Edit() {
                     <div className="row">
                       <div className="col-12 col-sm-12 ">
                         <Link to={`/edit${params.id}`}>
-                          <Btn className="btn-edit"  onClick={handleCreate} label="EDITAR" />
-
+                          <Btn className="btn-edit"  onClick={handleEdit} label="EDITAR" />
                         </Link>
                         <Link to={`/`}>
                           <button className="btn-back">VOLTAR</button>
-
-
                         </Link>
                       </div>
                     </div>
                   </form>
-                   
           </Wrapper>
       </Container>
   );

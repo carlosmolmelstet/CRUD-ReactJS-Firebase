@@ -1,8 +1,10 @@
 import React from 'react';
-
 import {Link} from 'react-router-dom';
 
-import { Nav, Logo } from './styles';
+import { 
+  Nav,
+  Logo
+} from './styles';
 
 function Navbar() {
   return (

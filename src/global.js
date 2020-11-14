@@ -12,8 +12,6 @@ export default createGlobalStyle`
         font-family: 'Cairo', sans-serif;
         overflow-x: hidden;
         height: 100%;
-
-
     }
 
     body, input, textarea, button{

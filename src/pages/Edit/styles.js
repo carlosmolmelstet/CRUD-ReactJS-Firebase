@@ -12,7 +12,7 @@ export const Modal = styled.div`
     z-index: 1000;
     overflow-y: hidden;
     background: rgba(0, 0, 0, 0.8);
-    position: absolute;
+    position: absolute; 
     width: 100vw;
     min-height: 100vh;
     display: none;

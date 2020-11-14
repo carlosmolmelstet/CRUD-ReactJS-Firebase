@@ -1,13 +1,11 @@
 import React from 'react';
 
-
-import {Container, Wrapper } from './styles';
+import {
+  Container,
+  Wrapper 
+} from './styles';
 
 function Modal(props) {
-  
-
-
-
   return (
      <Container id="modal">
        <Wrapper>
