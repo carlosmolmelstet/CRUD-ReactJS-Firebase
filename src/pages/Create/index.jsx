@@ -58,13 +58,13 @@ function Create() {
             <form >
               <div className="row">
                 <div className="col-12 col-sm-4">
-                  <Input onChange={handleInputChange} name="name" value={values.name} label="nome"/>
+                  <Input type="text" onChange={handleInputChange} name="name" value={values.name} label="nome"/>
                 </div>
                 <div className="col-12 col-sm-4">
-                  <Input onChange={handleInputChange} value={values.price} name="price" label="preço" />
+                  <Input type="number" onChange={handleInputChange} value={values.price} name="price" label="preço" />
                 </div>
                 <div className="col-12 col-sm-4">
-                  <Input onChange={handleInputChange} value={values.amont} name="amont" label="qtd" />
+                  <Input type="number" onChange={handleInputChange} value={values.amont} name="amont" label="qtd" />
                 </div>
               </div>
               <div className="row">
@@ -74,7 +74,7 @@ function Create() {
               </div>
               <div className="row">
                 <div className="col-12 col-sm-12">
-                  <Input onChange={handleInputChange} value={values.image} name="image" label="Imagem" />
+                  <Input type="text" onChange={handleInputChange} value={values.image} name="image" label="Imagem" />
                 </div>
               </div>
               <div className="row">
